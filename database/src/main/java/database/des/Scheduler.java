@@ -30,7 +30,7 @@ public class Scheduler {
 	}
 	
 	public void action() {
-		this.eventQueue.add(
-				 new Event(this.time + 10,this));
+//		this.eventQueue.add(
+//				 new Event(this.time + 10,this));
 	}
 }
