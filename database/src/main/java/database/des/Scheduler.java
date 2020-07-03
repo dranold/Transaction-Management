@@ -3,10 +3,7 @@ package database.des;
 import java.util.List;
 import java.util.PriorityQueue;
 
-import lombok.ToString;
 
-
-@ToString
 public class Scheduler {
 	private long time;
 	private PriorityQueue<Event> eventQueue;
@@ -16,7 +13,8 @@ public class Scheduler {
 		this.eventQueue = new PriorityQueue<Event>( (a,b) -> a.getTimestamp() < b.getTimestamp() ? -1 : 1);
 	}
 	
-	public void start(List<Event> inititalEvent) {
+	public int start(List<Event> inititalEvent) {
+		int eventsExecuted = 0;
 		this.eventQueue.addAll(inititalEvent);
 		while(!this.eventQueue.isEmpty()) {
 			// get next element
@@ -26,11 +24,18 @@ public class Scheduler {
 			System.out.println("Time: " + this.time + ", event = " + current);
 			// execute event
 			current.execute();
+			eventsExecuted++;
 		}
+		System.out.println("Events executed: " + eventsExecuted);
+		return eventsExecuted;
 	}
 	
-	public void action() {
-		this.eventQueue.add(
-				 new Event(this.time + 10,this));
+	public void scheduleInFuture(Event event, long timeInFuture) {
+		event.setTimestamp(timeInFuture + event.getTimestamp());
+		this.eventQueue.add(event);
+	}
+	
+	public void end() {
+		this.eventQueue.clear(); 
 	}
 }
