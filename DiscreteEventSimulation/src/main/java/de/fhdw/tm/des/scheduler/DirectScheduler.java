@@ -43,6 +43,7 @@ public class DirectScheduler extends DESScheduler {
 
 	@Override
 	protected void reset(RandomGenerator randomGenerator) {
+		this.executedEvents = 0;
 		this.currentTime = 0;
 		this.heap.clear();
 		this.randomGenerator = randomGenerator;
